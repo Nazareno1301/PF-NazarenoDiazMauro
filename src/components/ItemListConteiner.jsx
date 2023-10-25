@@ -2,9 +2,9 @@ import React from 'react'
 
 const ItemListConteiner = ({greeting}) => {
   return (
-    <div className='greeting'>
+    <h1 className='greeting'>
       {greeting}  
-    </div>
+    </h1>
   )
 }
 
