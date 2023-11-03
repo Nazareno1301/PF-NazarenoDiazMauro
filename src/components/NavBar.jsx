@@ -2,18 +2,15 @@ import React from 'react'
 import CartWidget from './CartWidget'
 import { Menu, MenuButton, MenuList, MenuItem, Flex, Box, Spacer, Button} from '@chakra-ui/react'
 
+import logo from "../assets/logo.png"
 
 const NavBar = () => {
   return (
     <div className='contenedor-navegacion'>
       <Flex className='navegacion'>
-        <Box className='logo' p='4'>
-          SS
-        </Box>
-        <Spacer />
         <Menu>
           <MenuButton as={Button}>
-            ¿Que estas Buscando?
+            CATEGORIAS
           </MenuButton>
           <MenuList >
             <MenuItem>Indumentaria</MenuItem>
@@ -21,6 +18,10 @@ const NavBar = () => {
             <MenuItem>Elementos</MenuItem>
           </MenuList>
         </Menu>
+        <Spacer />
+        <Box className='logo' p='4'>
+          <img src={logo} alt="" />
+        </Box>
         <Spacer />
         <Box p='4'>
           <CartWidget />
