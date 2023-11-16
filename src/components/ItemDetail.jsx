@@ -1,17 +1,14 @@
 import React from 'react'
-import {
-    Card, Stack, CardBody, CardFooter, Heading, Text, Divider, ButtonGroup,
-    Button, Image
-} from '@chakra-ui/react'
-import { Link } from 'react-router-dom';
+import ItemCount from './ItemCount';
 
+const ItemDetail= ({ productos }) => {
+    const {id} = useParams () 
 
-const ItemList = ({ productos }) => {
-    
+    const findDeProductos = productos.find((producto)=>producto.id === id)
 
     return (
         <div className='card' >
-            {productos.map((p) => (
+            {findDeProductos.map((p) => (
                 <div key={p.id}>
                     <Card maxW='sm'>
                         <CardBody>
@@ -22,25 +19,27 @@ const ItemList = ({ productos }) => {
                             />
                             <Stack mt='6' spacing='3'>
                                 <Heading size='md'>producto: {p.titulo}</Heading>
+                                <Text>{p.descripcion}</Text>
                                 <Text color='blue.600' fontSize='2xl'>${p.precio}</Text>
+                                <Text>{p.stock}</Text>
+
                             </Stack>
                         </CardBody>
                         <Divider />
                         <CardFooter>
                             <ButtonGroup spacing='2'>
+                            <ItemCount />
                                 <Button variant='solid' colorScheme='blue'>
-                                    {/* <Link to ={ `/item/${id}`}> */}
-                                    Ver Detalle
-                                    {/* </Link > */}
+                                    Agregar al carrito
                                 </Button>
                                 
                             </ButtonGroup>
                         </CardFooter>
-                        
+                        <Item />
                     </Card>
                 </div>
             ))}
         </div>
     );
 };
-export default ItemList
+export default ItemDetail
