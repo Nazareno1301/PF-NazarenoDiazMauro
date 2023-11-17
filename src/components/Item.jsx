@@ -17,7 +17,7 @@ const Item = ({ producto }) => {
             borderRadius='lg'
           />
           <Stack mt='6' spacing='3'>
-            <Heading size='md'>producto: {producto.titulo}</Heading>
+            <Heading size='md'>{producto.titulo}</Heading>
             <Text color='blue.600' fontSize='2xl'>${producto.precio}</Text>
           </Stack>
         </CardBody>
