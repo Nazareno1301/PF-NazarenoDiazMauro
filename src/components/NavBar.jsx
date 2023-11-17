@@ -12,13 +12,13 @@ const NavBar = () => {
           <MenuButton as={Button}>CATEGORIAS</MenuButton>
           <MenuList>
             <MenuItem>
-              <Link to="/categoria/indumentaria">indumentaria</Link>
+              <Link to={`/categoria/${"indumentaria"}`}>indumentaria</Link>
             </MenuItem>
             <MenuItem>
-              <Link to="/categoria/accesorios">accesorios</Link>
+              <Link to={`/categoria/${"accesorios"}`}>accesorios</Link>
             </MenuItem>
             <MenuItem>
-              <Link to="/categoria/elementos">elementos</Link>
+              <Link to={`/categoria/${"elementos"}`}>elementos</Link>
             </MenuItem>
           </MenuList>
         </Menu>

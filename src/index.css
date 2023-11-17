@@ -80,6 +80,9 @@ button:focus-visible {
   flex-wrap: wrap;
   gap: 2rem
 }
+.imagen{
+  height: 15rem;
+}
 
 @media (prefers-color-scheme: light) {
   :root {
