@@ -36,11 +36,12 @@
 
 .contenedor-navegacion {
   width: 100%;
+  background-color: rgb(255, 255, 255);
 }
 
 .navegacion {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   height: 15rem;
   margin: 1rem;
 }

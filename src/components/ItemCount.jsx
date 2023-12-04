@@ -1,51 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Box, Spacer, Flex, Alert, AlertIcon, ButtonGroup, IconButton } from '@chakra-ui/react';
-import { AddIcon, MinusIcon } from '@chakra-ui/icons'
+import React, { useContext, useState } from 'react';
+import { Button, ButtonGroup, IconButton } from '@chakra-ui/react';
+import { AddIcon, MinusIcon } from '@chakra-ui/icons';
+import { CartContext } from '../contexts/CartContext';
 
-const ItemCount = () => {
-    const [count, setCount] = useState(0);
+const ItemCount = ({ onAdd }) => {
+  const { agregarAlCarrito } = useContext(CartContext);
+  const [count, setCount] = useState(0);
 
-    const resetCount = () => {
-        setCount(0)
+  const increment = () => setCount(count + 1);
+  const decrement = () => {
+    if (count > 0) {
+      setCount(count - 1);
+    } else {
+      alert("La cantidad no puede ser negativa");
+      setCount(0);
     }
-    const incrementar = () => {
-        setCount(count + 1);
-    }
-    const decrementar = () => {
-        setCount(count - 1);
-    }
-    if (count < 0) {
-        return (
-            <Alert status='error'>
-                <AlertIcon />
-                No puedes tener menos productos
-                <Spacer />
-                <Button colorScheme='red' onClick={resetCount}> Ok</Button>
-            </Alert>
-        )
+  };
 
-    } else if (count > 10) {
-        return (
-            <Alert status='error'>
-                <AlertIcon />
-                Haz alcanzado el limite de este producto
-                <Spacer />
-                <Button colorScheme='red' onClick={resetCount}>reset</Button>
-            </Alert>
-        )
-    }
+  const addToCartHandler = () => {
+    onAdd(count);
+    setCount(0);
+  };
 
-    return (
-        <div>
-            <ButtonGroup size='md' isAttached variant='outline'>
-                <IconButton onClick={decrementar} icon={<MinusIcon />} />
-                <Button>{count}</Button>
-                <IconButton onClick={incrementar} icon={<AddIcon />} />
-            </ButtonGroup>
+  return (
+    <ButtonGroup size='md' isAttached variant='outline'>
+      <IconButton onClick={decrement} icon={<MinusIcon />} />
+      <Button>{count}</Button>
+      <IconButton onClick={increment} icon={<AddIcon />} />
+      <Button variant='solid' colorScheme='blue' onClick={addToCartHandler}>
+        Agregar al carrito
+      </Button>
+    </ButtonGroup>
+  );
+};
 
-
-        </div>
-    )
-}
-
-export default ItemCount
+export default ItemCount;

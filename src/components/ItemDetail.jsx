@@ -1,19 +1,23 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import {
-  Card,
-  Stack,
-  CardBody,
-  CardFooter,
-  Heading,
-  Text,
-  Divider,
-  ButtonGroup,
-  Button,
-  Image,
+  Card, Stack, CardBody, CardFooter, Heading, Text, Divider, ButtonGroup,
+  Image, Button
 } from '@chakra-ui/react';
 import ItemCount from './ItemCount';
+import { CartContext } from '../contexts/CartContext';
+import { Link } from 'react-router-dom';
 
 const ItemDetail = ({ producto }) => {
+  const { agregarAlCarrito } = useContext(CartContext);
+  const [cantidadSeleccionada, setCantidadSeleccionada] = useState(0);
+
+  const handleAgregarAlCarrito = (cantidad) => {
+    agregarAlCarrito(producto, cantidad);
+    setCantidadSeleccionada(cantidad);
+  };
+
+ 
+
   if (!producto) {
     return <div>No se encontró el producto</div>;
   }
@@ -24,7 +28,7 @@ const ItemDetail = ({ producto }) => {
     <div className='card'>
       <Card maxW='sm'>
         <CardBody>
-          <Image src={imagenUrl} alt={`Imagen de ${producto.titulo}`} borderRadius='lg' />
+          <Image src={producto.imagen} alt={`Imagen de ${producto.titulo}`} borderRadius='lg' />
           <Stack mt='6' spacing='3'>
             <Heading size='md'>{producto.titulo}</Heading>
             <Text>{producto.descripcion}</Text>
@@ -36,12 +40,18 @@ const ItemDetail = ({ producto }) => {
         </CardBody>
         <Divider />
         <CardFooter>
-          <ButtonGroup spacing='2'>
-            <ItemCount />
-            <Button variant='solid' colorScheme='blue'>
-              Agregar al carrito
+          {cantidadSeleccionada === 0 ? (
+            <ButtonGroup spacing='2'>
+              <ItemCount onAdd={handleAgregarAlCarrito} />
+            </ButtonGroup>
+          ) : (
+            <Link to ="/cart">
+
+            <Button variant='solid' colorScheme='teal'>
+              ir al carrito
             </Button>
-          </ButtonGroup>
+            </Link>
+          )}
         </CardFooter>
       </Card>
     </div>

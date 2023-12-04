@@ -1,39 +1,87 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import CartWidget from './CartWidget';
-import { Menu, MenuButton, MenuList, MenuItem, Flex, Box, Spacer, Button } from '@chakra-ui/react';
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Flex,
+  Box,
+  Spacer,
+  IconButton,
+  Button,
+  useColorMode,
+  Switch,
+} from '@chakra-ui/react';
+import { HamburgerIcon, SunIcon, MoonIcon } from '@chakra-ui/icons';
 import logo from '../assets/logo.png';
+import { CartContext } from '../contexts/CartContext';
 
 const NavBar = () => {
+  const { vaciarCarrito, cantidadEnCarrito } = useContext(CartContext);
+  const { colorMode, toggleColorMode } = useColorMode();
+
+  const handleLogoClick = () => {
+    vaciarCarrito();
+  };
+
   return (
-    <div className='contenedor-navegacion'>
-      <Flex className='navegacion'>
+    <Flex
+  align="center"
+  width="100%"
+  justify="space-between"
+  p="4"
+  bg={colorMode === 'dark' ? 'blackAlpha.500' : 'white'} 
+  color={colorMode === 'dark' ? 'white' : 'black'} 
+>
+      <Flex align="center">
         <Menu>
-          <MenuButton as={Button}>CATEGORIAS</MenuButton>
+          <MenuButton as={IconButton} icon={<HamburgerIcon />} variant="outline" mr="4" />
           <MenuList>
             <MenuItem>
-            <Link to={`/categoria/indumentaria`}>indumentaria</Link>
+              <Link to={`/categoria/indumentaria`}>Indumentaria</Link>
             </MenuItem>
             <MenuItem>
-              <Link to={`/categoria/accesorios`}>accesorios</Link>
+              <Link to={`/categoria/accesorios`}>Accesorios</Link>
             </MenuItem>
             <MenuItem>
-              <Link to={`/categoria/elementos`}>elementos</Link>
+              <Link to={`/categoria/elementos`}>Elementos</Link>
             </MenuItem>
           </MenuList>
         </Menu>
-        <Spacer />
-        <Link to="/">
-          <Box className='logo' p='4'>
-            <img src={logo} alt="" />
+        <Link to="/" onClick={handleLogoClick}>
+          <Box className='logo' ml="4">
+            <img src={logo} alt="" height="50px" />
           </Box>
         </Link>
-        <Spacer />
-        <Box p='4'>
-          <CartWidget />
-        </Box>
       </Flex>
-    </div>
+      <Flex align="center">
+        {cantidadEnCarrito() > 0 && (
+          <IconButton
+            icon={<CartWidget />}
+            variant="ghost"
+            aria-label="Carrito"
+            mr="4"
+            fontSize="20px"
+          />
+        )}
+        <Box mr="4">
+          <Switch
+            isChecked={colorMode === 'dark'}
+            onChange={toggleColorMode}
+            size="md"
+            colorScheme="teal"
+          />
+        </Box>
+        <IconButton
+          icon={colorMode === 'dark' ? <SunIcon /> : <MoonIcon />}
+          onClick={toggleColorMode}
+          variant="ghost"
+          aria-label="Cambiar Tema"
+        />
+      </Flex>
+    </Flex>
   );
 };
 
